@@ -1,0 +1,54 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>My Tasks</h2>
+    <a href="{% url 'task_create' %}" class="btn btn-primary">+ New Task</a>
+</div>
+
+{% if tasks %}
+    <div class="row">
+        {% for task in tasks %}
+            <div class="col-md-6 mb-3">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="{% if task.completed %}text-decoration-line-through text-muted{% endif %}">
+                            {{ task.title }}
+                        </h5>
+
+                        <p class="text-muted">{{ task.description|default:"No description provided." }}</p>
+
+                        {% if task.due_date %}
+                            <p class="mb-1"><strong>Due Date:</strong> {{ task.due_date }}</p>
+                        {% endif %}
+
+                        <p class="mb-3">
+                            <strong>Status:</strong>
+                            {% if task.completed %}
+                                <span class="badge bg-success">Completed</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% endif %}
+                        </p>
+
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="{% url 'task_toggle' task.pk %}" class="btn btn-outline-success btn-sm">
+                                {% if task.completed %}Mark Pending{% else %}Mark Complete{% endif %}
+                            </a>
+                            <a href="{% url 'task_edit' task.pk %}" class="btn btn-outline-warning btn-sm">Edit</a>
+                            <a href="{% url 'task_delete' task.pk %}" class="btn btn-outline-danger btn-sm">Delete</a>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white text-muted small">
+                        Created: {{ task.created_at }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        No tasks found. Click <strong>New Task</strong> to create your first task.
+    </div>
+{% endif %}
+{% endblock %}

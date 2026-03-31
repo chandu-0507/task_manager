@@ -1,0 +1,69 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<div class="mb-4">
+    <h2>Hello, {{ user.username }} 👋</h2>
+    <p class="text-muted">Welcome to your task dashboard.</p>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white shadow-sm border-0">
+            <div class="card-body">
+                <h5>Total Tasks</h5>
+                <h2>{{ total_tasks }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card bg-success text-white shadow-sm border-0">
+            <div class="card-body">
+                <h5>Completed Tasks</h5>
+                <h2>{{ completed_tasks }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card bg-warning text-dark shadow-sm border-0">
+            <div class="card-body">
+                <h5>Pending Tasks</h5>
+                <h2>{{ pending_tasks }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>Recent Tasks</h4>
+            <a href="{% url 'task_create' %}" class="btn btn-primary btn-sm">+ Add Task</a>
+        </div>
+
+        {% if recent_tasks %}
+            <ul class="list-group">
+                {% for task in recent_tasks %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong class="{% if task.completed %}text-decoration-line-through text-muted{% endif %}">
+                                {{ task.title }}
+                            </strong>
+                            {% if task.due_date %}
+                                <br>
+                                <small class="text-muted">Due: {{ task.due_date }}</small>
+                            {% endif %}
+                        </div>
+                        <span class="badge {% if task.completed %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                            {% if task.completed %}Completed{% else %}Pending{% endif %}
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No tasks yet. Start by creating one.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
