@@ -4,6 +4,12 @@ A simple Task Manager web application built with **Django**, **Bootstrap**, and 
 
 This project allows users to register, log in, and manage their personal tasks with full CRUD functionality.
 
+## Live Demo
+
+🔗 **Live Website:** [https://task-manager-dck2.onrender.com/](https://task-manager-dck2.onrender.com/)
+
+---
+
 ## Features
 
 - User signup
@@ -15,6 +21,8 @@ This project allows users to register, log in, and manage their personal tasks w
 - Mark tasks as complete/incomplete
 - Delete tasks
 - Admin panel for managing users and tasks
+
+---
 
 ## Tech Stack
 
